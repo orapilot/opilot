@@ -44,7 +44,8 @@ def only_offroad(started, params, CP: car.CarParams) -> bool:
 procs = [
   DaemonProcess("manage_athenad", "system.athena.manage_athenad", "AthenadPid"),
 
-  NativeProcess("camerad", "system/camerad", ["./camerad"], driverview),
+  #NativeProcess("camerad", "system/camerad", ["./camerad"], driverview),
+  PythonProcess("camerad", "system.pycamerad.camerad", only_onroad, enabled=(not PC or WEBCAM)),
   NativeProcess("logcatd", "system/logcatd", ["./logcatd"], only_onroad),
   NativeProcess("proclogd", "system/proclogd", ["./proclogd"], only_onroad),
   PythonProcess("logmessaged", "system.logmessaged", always_run),

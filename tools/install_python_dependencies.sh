@@ -21,7 +21,8 @@ if ! command -v "poetry" > /dev/null 2>&1; then
   eval $ADD_PATH_CMD
   printf "\n#poetry path\n$ADD_PATH_CMD\n" >> $RC_FILE
 fi
-
+#disable keyring
+export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
 poetry config virtualenvs.prefer-active-python true --local
 poetry config virtualenvs.in-project true --local
 
@@ -39,8 +40,3 @@ poetry install --no-cache --no-root
 
 [ -n "$POETRY_VIRTUALENVS_CREATE" ] && RUN="" || RUN="poetry run"
 
-if [ "$(uname)" != "Darwin" ] && [ -e "$ROOT/.git" ]; then
-  echo "pre-commit hooks install..."
-  $RUN pre-commit install
-  $RUN git submodule foreach pre-commit install
-fi
