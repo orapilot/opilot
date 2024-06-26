@@ -39,7 +39,9 @@ def create_ort_session(path, fp16_to_fp32):
   options.graph_optimization_level = ort.GraphOptimizationLevel.ORT_DISABLE_ALL
 
   provider: str | tuple[str, dict[Any, Any]]
-  if 'OpenVINOExecutionProvider' in ort.get_available_providers() and 'ONNXCPU' not in os.environ:
+  if 'HailoExecutionProvider' in ort.get_available_providers() and 'ONNXCPU' not in os.environ:
+    provider = 'HailoExecutionProvider'
+  elif 'OpenVINOExecutionProvider' in ort.get_available_providers() and 'ONNXCPU' not in os.environ:
     provider = 'OpenVINOExecutionProvider'
   elif 'CUDAExecutionProvider' in ort.get_available_providers() and 'ONNXCPU' not in os.environ:
     options.intra_op_num_threads = 2
