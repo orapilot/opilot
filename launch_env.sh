@@ -31,9 +31,6 @@ export NOSENSOR=1
 export GPU=1
 export SKIP_FW_QUERY=1
 
-#export NAV=1
-#export MAPBOX_TOKEN="sk.eyJ1IjoiYmlyZHpoYW5nIiwiYSI6ImNsbjBna2piNDAxOWEycW9pd3F6bXdqdWIifQ.lXSixDAlFlidB87eg5ashg"
-
 export GST_VIDEO_CONVERT_USE_RGA=1
 export GST_MPP_VIDEODEC_DEFAULT_ARM_AFBC=1
 
