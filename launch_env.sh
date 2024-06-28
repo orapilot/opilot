@@ -18,7 +18,7 @@ export CAMERA_ROAD_ID=$(ls -l /dev/v4l/by-id/ |grep index0|grep Sonix|awk -F'vid
 #export DRIVERCAM_ID=$(ls -l /dev/v4l/by-id/ |grep index0|grep Sonix|awk -F'video' '{print $NF}')
 #export DRIVERCAM_ID=2
 #export ROADCAM_ID=1
-export FINGERPRINT="HONDA CIVIC 2016"
+#export FINGERPRINT="HONDA CIVIC 2016"
 #export FINGERPRINT="TOYOTA COROLLA HYBRID TSS2 2019"
 
 #export DISPLAY=:0.0

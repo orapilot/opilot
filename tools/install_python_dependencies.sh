@@ -30,8 +30,6 @@ if ! command -v "uv" > /dev/null 2>&1; then
 fi
 #disable keyring
 export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
-poetry config virtualenvs.prefer-active-python true --local
-poetry config virtualenvs.in-project true --local
 
 echo "updating uv..."
 update_uv
@@ -47,11 +45,4 @@ if [[ "$(uname)" == 'Darwin' ]]; then
   echo "export ZMQ=1" >> $ROOT/.env
   echo "export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES" >> $ROOT/.env
 fi
-
-poetry self add poetry-dotenv-plugin@^0.1.0
-
-echo "installing python packages..."
-poetry install --no-cache --no-root
-
-[ -n "$POETRY_VIRTUALENVS_CREATE" ] && RUN="" || RUN="poetry run"
 
