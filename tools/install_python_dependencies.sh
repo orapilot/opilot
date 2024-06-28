@@ -8,23 +8,38 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 ROOT=$DIR/../
 cd $ROOT
 
-RC_FILE="${HOME}/.$(basename ${SHELL})rc"
-if [ "$(uname)" == "Darwin" ] && [ $SHELL == "/bin/bash" ]; then
-  RC_FILE="$HOME/.bash_profile"
-fi
+# updating uv on macOS results in 403 sometimes
+function update_uv() {
+  for i in $(seq 1 5);
+  do
+    if uv self update; then
+      return 0
+    else
+      sleep 2
+    fi
+  done
+  echo "Failed to update uv 5 times!"
+}
 
-if ! command -v "poetry" > /dev/null 2>&1; then
-  echo "installing poetry..."
-  curl -sSL https://install.python-poetry.org | python3 -
-  POETRY_BIN='$HOME/.local/bin'
-  ADD_PATH_CMD="export PATH=\"$POETRY_BIN:\$PATH\""
+if ! command -v "uv" > /dev/null 2>&1; then
+  echo "installing uv..."
+  curl -LsSf https://astral.sh/uv/install.sh | sh
+  UV_BIN='$HOME/.cargo/env'
+  ADD_PATH_CMD=". \"$UV_BIN\""
   eval $ADD_PATH_CMD
-  printf "\n#poetry path\n$ADD_PATH_CMD\n" >> $RC_FILE
 fi
 #disable keyring
 export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
 poetry config virtualenvs.prefer-active-python true --local
 poetry config virtualenvs.in-project true --local
+
+echo "updating uv..."
+update_uv
+
+# TODO: remove --no-cache once this is fixed: https://github.com/astral-sh/uv/issues/4378
+echo "installing python packages..."
+uv --no-cache sync --all-extras
+source .venv/bin/activate
 
 echo "PYTHONPATH=${PWD}" > $ROOT/.env
 if [[ "$(uname)" == 'Darwin' ]]; then
