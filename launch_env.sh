@@ -21,7 +21,7 @@ export CAMERA_ROAD_ID=$(ls -l /dev/v4l/by-id/ |grep index0|grep Sonix|awk -F'vid
 #export FINGERPRINT="HONDA CIVIC 2016"
 #export FINGERPRINT="TOYOTA COROLLA HYBRID TSS2 2019"
 
-#export DISPLAY=:0.0
+export DISPLAY=:0.0
 export SIMULATION=1
 export NOSENSOR=1
 export GPU=1

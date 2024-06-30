@@ -336,7 +336,7 @@ class Controls:
     else:
       self.logged_comm_issue = None
 
-    if not (self.CP.notCar and self.joystick_mode):
+    if not (self.CP.notCar and self.joystick_mode) and not SIMULATION:
       if not self.sm['liveLocationKalman'].posenetOK:
         self.events.add(EventName.posenetInvalid)
       if not self.sm['liveLocationKalman'].deviceStable:
