@@ -28,6 +28,12 @@ if arch != "Darwin" and arch != "aarch64":
   common_src += ['runners/snpemodel.cc']
   snpe_lib += ['SNPE']
 
+rknn_lib = []
+if arch == 'aarch64':
+  common_src += ['runners/rknnmodel.cc']
+  rknn_lib += ['rknnrt']
+
+
 # OpenCL is a framework on Mac
 if arch == "Darwin":
   frameworks += ['OpenCL']
@@ -46,11 +52,15 @@ snpe_rpath = lenvCython['RPATH'] + [snpe_rpath_qcom if arch == "larch64" else sn
 
 cython_libs = envCython["LIBS"] + libs
 snpemodel_lib = lenv.Library('snpemodel', ['runners/snpemodel.cc'])
+rknnmodel_lib = lenv.Library('rknnmodel', ['runners/rknnmodel.cc'])
 commonmodel_lib = lenv.Library('commonmodel', common_src)
 
 lenvCython.Program('runners/runmodel_pyx.so', 'runners/runmodel_pyx.pyx', LIBS=cython_libs, FRAMEWORKS=frameworks)
 lenvCython.Program('runners/snpemodel_pyx.so', 'runners/snpemodel_pyx.pyx', LIBS=[snpemodel_lib, snpe_lib, *cython_libs], FRAMEWORKS=frameworks, RPATH=snpe_rpath)
 lenvCython.Program('models/commonmodel_pyx.so', 'models/commonmodel_pyx.pyx', LIBS=[commonmodel_lib, *cython_libs], FRAMEWORKS=frameworks)
+
+lenvCython.Program('runners/rknnmodel_pyx.so', 'runners/rknnmodel_pyx.pyx', LIBS=[rknnmodel_lib, rknn_lib, *cython_libs], FRAMEWORKS=frameworks)
+
 
 tinygrad_files = ["#"+x for x in glob.glob(env.Dir("#tinygrad_repo").relpath + "/**", recursive=True, root_dir=env.Dir("#").abspath)]
 
