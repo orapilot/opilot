@@ -114,7 +114,7 @@ def get_driverstate_packet(model_output: np.ndarray, frame_id: int, location_ts:
 
 
 def main():
-  gc.disable()
+  # gc.disable()
   set_realtime_priority(1)
 
   model = ModelState()

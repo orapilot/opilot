@@ -38,7 +38,7 @@ def set_core_affinity(cores: list[int]) -> None:
 
 
 def config_realtime_process(cores: int | list[int], priority: int) -> None:
-  gc.disable()
+  # gc.disable()
   set_realtime_priority(priority)
   c = cores if isinstance(cores, list) else [cores, ]
   set_core_affinity(c)

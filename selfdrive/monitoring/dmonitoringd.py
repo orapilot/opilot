@@ -8,7 +8,7 @@ from openpilot.selfdrive.monitoring.helpers import DriverMonitoring
 
 
 def dmonitoringd_thread():
-  gc.disable()
+  # gc.disable()
   set_realtime_priority(2)
 
   params = Params()

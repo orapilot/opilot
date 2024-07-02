@@ -256,7 +256,7 @@ class Calibrator:
 
 
 def main() -> NoReturn:
-  gc.disable()
+  # gc.disable()
   set_realtime_priority(1)
 
   pm = messaging.PubMaster(['liveCalibration'])
