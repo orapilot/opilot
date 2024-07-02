@@ -23,7 +23,7 @@ class ModelRunner(RunModel):
       from openpilot.selfdrive.modeld.runners.onnxmodel import ONNXModel as Runner
       runner_type = ModelRunner.ONNX
     elif ModelRunner.RKNN in paths:
-      from openpilot.selfdrive.modeld.runners.rknnmodel import RKNNModel as Runner
+      from openpilot.selfdrive.modeld.runners.rknnmodel_pyx import RKNNModel as Runner # type: ignore
       runner_type = ModelRunner.RKNN
     else:
       raise Exception("Couldn't select a model runner, make sure to pass at least one valid model path")
