@@ -3,8 +3,8 @@ set -e
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
 
-ARCHNAME="x86_64"
-BLAS_TARGET="X64_AUTOMATIC"
+ARCHNAME="aarch64"
+BLAS_TARGET="ARMV8A_ARM_CORTEX_A57"
 if [ -f /TICI ]; then
   ARCHNAME="larch64"
   BLAS_TARGET="ARMV8A_ARM_CORTEX_A57"

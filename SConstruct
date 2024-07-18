@@ -144,6 +144,7 @@ else:
       f"#third_party/acados/{arch}/lib",
       f"#third_party/libyuv/{arch}/lib",
       "/usr/lib",
+      "/usr/lib/aarch64-linux-gnu",
       "/usr/local/lib",
     ]
 

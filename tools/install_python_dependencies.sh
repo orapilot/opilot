@@ -34,8 +34,15 @@ export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
 echo "updating uv..."
 update_uv
 
+
+# otherwise it will install cpython-3.12.3-macos-aarch64-non
+uv toolchain install
+
 # TODO: remove --no-cache once this is fixed: https://github.com/astral-sh/uv/issues/4378
 echo "installing python packages..."
+uv venv
+ln -s /usr/include/python3.12/ .venv/include
+uvx pip --python .venv/bin/python3 install casadi==3.6.5 -v
 uv --no-cache sync --all-extras
 source .venv/bin/activate
 
