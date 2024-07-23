@@ -8,7 +8,7 @@ import numpy as np
 import SCons.Errors
 
 SCons.Warnings.warningAsException(True)
-
+sys.setrecursionlimit(10000)
 # pending upstream fix - https://github.com/SCons/scons/issues/4461
 #SetOption('warn', 'all')
 
