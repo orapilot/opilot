@@ -10,7 +10,7 @@ import sys
 import tqdm
 import urllib.parse
 import warnings
-import zstd
+import zstandard as zstd
 
 from collections.abc import Callable, Iterable, Iterator
 from urllib.parse import parse_qs, urlparse
@@ -25,6 +25,16 @@ from openpilot.tools.lib.route import Route, SegmentRange
 LogMessage = type[capnp._DynamicStructReader]
 LogIterable = Iterable[LogMessage]
 RawLogIterable = Iterable[bytes]
+
+
+def save_log(dest, log_msgs, compress=True):
+  dat = b"".join(msg.as_builder().to_bytes() for msg in log_msgs)
+
+  if compress:
+    dat = bz2.compress(dat)
+
+  with open(dest, "wb") as f:
+    f.write(dat)
 
 
 class _LogFileReader:
